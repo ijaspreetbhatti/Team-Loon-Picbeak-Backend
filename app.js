@@ -1,18 +1,19 @@
 const express = require('express');
+const app = express();
+const mongoose = require('mongoose');
 
 // Using this package to load .env file that has environment variables
-require('dotenv/config');
-
-const mongoose = require('mongoose');
+const connected = require('dotenv/config');
 
 // Importing the routes for users
 const profileRoutes = require('./routes/profiles');
 
-const app = express();
-
-app.listen(process.env.PORT || 8080, () => {
-    console.log('Listening on port ' + (process.env.PORT || 8080));
-});
+connected
+    .then(() => {
+        app.listen(process.env.PORT || 8080, () => {
+            console.log('Listening on port ' + (process.env.PORT || 8080));
+        });
+    })
 
 app.use(express.urlencoded({ extended: true }));
 
