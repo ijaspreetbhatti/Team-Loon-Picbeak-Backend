@@ -1,16 +1,16 @@
 const express = require('express');
 const router = express.Router();
 
-// Importing model to query MongoDB
-const profile = require('../models/Profile');
+const { getProfiles, getProfile, postProfile, putProfile, deleteProfile } = require('../controllers/profileController')
 
-router.get("/allusers", async (req, res) => {
-    res.json(await profile.find());
-});
+router.get("/", getProfiles);
 
-router.post("/createNewUser", (req, res) => {
-    const newUser = new profile({ name: req.body.name });
-    newUser.save().then((rs) => res.json(rs));
-});
+router.get("/:id", getProfile);
+
+router.post("/", postProfile);
+
+router.put("/:id", putProfile);
+
+router.delete("/:id", deleteProfile);
 
 module.exports = router;
