@@ -1,19 +1,14 @@
 const mongoose = require('mongoose');
 
-const BirdUserImageMetadataSchema = mongoose.Schema({
-    dateUploaded: Date,
-    imageType: String
-})
+const BirdSchema = mongoose.Schema({
+    sciName: String,
+    commonName: String,
+    imageLink: String,
+    imageType: String,
+    audioLink: String,
+    gallery: [String],
+    description: String,
+    conservationStatus: String,
+});
 
-const UserBirdSchema = mongoose.Schema({
-    birdId: String,
-    birdUserImage: String,
-    birdUserImageMetadata: BirdUserImageMetadataSchema,
-})
-
-const bird = mongoose.model('bird', UserBirdSchema);
-
-module.exports = {
-    bird: bird,
-    UserBirdSchema
-};
+module.exports = mongoose.model('bird', BirdSchema);

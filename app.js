@@ -13,7 +13,10 @@ connected
     });
 
 // Importing the routes for users
-const profileRoutes = require('./routes/profiles');
+const routes = require('./routes/index');
+// const profileRoutes = require('./routes/profiles');
+// const collectedBirdRoutes = require('./routes/collectedBirds');
+// const birdRoutes = require('./routes/birds');
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -22,4 +25,7 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-app.use('/profile', profileRoutes);
+app.use('/', routes);
+// app.use('/profile', profileRoutes);
+// app.use('/collectedBird', collectedBirdRoutes);
+// app.use('/bird', birdRoutes);

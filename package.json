@@ -20,6 +20,7 @@
   "homepage": "https://github.com/ijaspreetbhatti/Team-Loon-Picbeak-Backend#readme",
   "description": "",
   "dependencies": {
+    "axios": "^0.26.0",
     "dotenv": "^15.0.0",
     "express": "^4.17.2",
     "mongoose": "^6.1.9"
