@@ -14,7 +14,9 @@ connected
 
 // Importing the routes for users
 const profileRoutes = require('./routes/profiles');
+const loginRoute = require('./routes/login')
 
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -23,3 +25,4 @@ app.get('/', (req, res) => {
 });
 
 app.use('/profile', profileRoutes);
+app.use('/login', loginRoute);
