@@ -32,9 +32,10 @@ const putProfile = async (req, res) => {
 };
 
 const deleteProfile = async (req, res) => {
-    await profile.updateOne({ _id: req.params.id }, {
+    const response = await profile.updateOne({ _id: req.params.id }, {
         isActive: false
     });
+    res.json(response);
 };
 
 module.exports = {

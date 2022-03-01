@@ -1,7 +1,5 @@
 const mongoose = require('mongoose');
 
-const { UserBirdSchema } = require('./Bird');
-
 const ProfileSchema = mongoose.Schema({
     isActive: { type: Boolean, default: true },
     nickName: {
@@ -16,7 +14,7 @@ const ProfileSchema = mongoose.Schema({
         type: String,
         required: true,
     },
-    collectedBirds: [UserBirdSchema]
+    collectedBirds: [String]
 });
 
 module.exports = mongoose.model('profile', ProfileSchema);
