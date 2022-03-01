@@ -11,11 +11,9 @@ const getProfile = async (req, res) => {
 const postProfile = async (req, res) => {
     console.log(req.body)
     const newUser = new profile({
-        credentials: {
-            nickName: req.body.nickName,
-            email: req.body.email,
-            password: req.body.password,
-        }
+        nickName: req.body.nickName,
+        email: req.body.email,
+        password: req.body.password,
     });
     const response = await newUser.save();
     res.json(response);
