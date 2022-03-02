@@ -9,7 +9,7 @@ const CollectedBirdImageMetadataSchema = mongoose.Schema({
 
 const CollectedBirdSchema = mongoose.Schema({
     collectedBirdId: String,
-    collectedBirdSciId: String,
+    collectedBirdSciName: String,
     collectedBirdImage: String,
     collectedBirdImageMetadata: CollectedBirdImageMetadataSchema,
 })
