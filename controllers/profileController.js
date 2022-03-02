@@ -22,11 +22,9 @@ const postProfile = async (req, res) => {
 const putProfile = async (req, res) => {
     console.log(req.body)
     const response = await profile.updateOne({ _id: req.params.id }, {
-        credentials: {
-            nickName: req.body.nickName,
-            email: req.body.email,
-            password: req.body.password,
-        }
+        nickName: req.body.nickName,
+        email: req.body.email,
+        password: req.body.password,
     })
     res.json(response);
 };

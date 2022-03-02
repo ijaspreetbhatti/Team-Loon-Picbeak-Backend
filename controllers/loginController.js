@@ -1,4 +1,3 @@
-const login = require('../models/Login');
 const profile = require('../models/Profile');
 
 const matchUser = async (req, res) => {
