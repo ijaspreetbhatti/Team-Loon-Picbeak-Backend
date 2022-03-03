@@ -44,6 +44,7 @@ const putProfile = async (req, res) => {
             nickName: req.body.nickName,
             email: req.body.email,
             password: req.body.password,
+            portrait: req.body.portrait,
         })
         res.json(response);
     } catch (err) {
