@@ -1,4 +1,8 @@
 const Profile = require('../models/Profile');
+// const crypto = require('crypto');
+// const hash = crypto.createHash('sha1');
+// const password = hash.update(req.body.password, 'utf-8');
+// const hashedPassword = password.copy().digest('hex');
 
 const getProfiles = async (req, res) => {
     try {
