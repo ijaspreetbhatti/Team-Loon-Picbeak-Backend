@@ -1,16 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
-const { getProfiles, getProfile, postProfile, putProfile, deleteProfile } = require('../controllers/profileController')
+const { getCollectedBirdImage, createCollectedBirdImage } = require('../controllers/collectedBirdController')
 
-router.get("/", getProfiles);
-
-router.get("/:id", getProfile);
-
-router.post("/", postProfile);
-
-router.put("/:id", putProfile);
-
-router.delete("/:id", deleteProfile);
+router.get("/:author/:sciName", getCollectedBirdImage);
+router.post("/:author/:sciName", createCollectedBirdImage);
 
 module.exports = router;

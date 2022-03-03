@@ -1,17 +1,18 @@
 const mongoose = require('mongoose');
 
-const CollectedBirdImageMetadataSchema = mongoose.Schema({
-    imageType: String,
-    imageHeight: String,
-    imageWidth: String,
-    uploadDate: Date,
-})
-
 const CollectedBirdSchema = mongoose.Schema({
-    collectedBirdId: String,
-    collectedBirdSciName: String,
-    collectedBirdImage: String,
-    collectedBirdImageMetadata: CollectedBirdImageMetadataSchema,
+    sciName: {
+        type: String,
+        required: true,
+    },
+    imageLink: {
+        type: String,
+        required: true,
+    },
+    author: {
+        type: String,
+        required: true,
+    },
 })
 
 const collectedBird = mongoose.model('collectedBird', CollectedBirdSchema);
