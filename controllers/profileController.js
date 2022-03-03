@@ -1,39 +1,75 @@
-const profile = require('../models/Profile');
+const Profile = require('../models/Profile');
 
 const getProfiles = async (req, res) => {
-    res.json(await profile.find());
+    try {
+        res.json(await Profile.find());
+    } catch (err) {
+        return res.status(401).send(err.message);
+    }
 };
 
 const getProfile = async (req, res) => {
-    res.json(await profile.findOne({ _id: req.params.id }));
+    try {
+        res.json(await Profile.findOne({ _id: req.params.id }));
+    } catch (err) {
+        return res.status(401).send(err.message);
+    }
 };
 
 const postProfile = async (req, res) => {
-    console.log(req.body)
-    const newUser = new profile({
-        nickName: req.body.nickName,
-        email: req.body.email,
-        password: req.body.password,
-    });
-    const response = await newUser.save();
-    res.json(response);
+    try {
+        console.log(req.body)
+        const newUser = new Profile({
+            nickName: req.body.nickName,
+            email: req.body.email,
+            password: req.body.password,
+            portrait: '621feb430082282921ade8ac',
+            collectedBirds: []
+        });
+        const response = await newUser.save();
+        res.json(response);
+    } catch (err) {
+        return res.status(401).send(err.message);
+    }
 };
 
 const putProfile = async (req, res) => {
-    console.log(req.body)
-    const response = await profile.updateOne({ _id: req.params.id }, {
-        nickName: req.body.nickName,
-        email: req.body.email,
-        password: req.body.password,
-    })
-    res.json(response);
+    try {
+        console.log(req.body)
+        const response = await Profile.updateOne({ _id: req.params.id }, {
+            nickName: req.body.nickName,
+            email: req.body.email,
+            password: req.body.password,
+        })
+        res.json(response);
+    } catch (err) {
+        return res.status(401).send(err.message);
+    }
 };
 
 const deleteProfile = async (req, res) => {
-    const response = await profile.updateOne({ _id: req.params.id }, {
-        isActive: false
-    });
-    res.json(response);
+    try {
+        const response = await Profile.updateOne({ _id: req.params.id }, {
+            isActive: false
+        });
+        res.json(response);
+    } catch (err) {
+        return res.status(401).send(err.message);
+    }
+};
+
+const addCollectedBird = async (req, res) => {
+    try {
+        const response = await Profile.updateOne({ _id: req.params.author }, {
+            "$addToSet":
+            {
+                "collectedBirds": req.params.sciName
+            }
+        });
+        res.json(response);
+    } catch (err) {
+        return res.status(400).send(err.message);
+    }
 };
 
 module.exports = {
@@ -42,4 +78,5 @@ module.exports = {
     postProfile,
     putProfile,
     deleteProfile,
+    addCollectedBird,
 };

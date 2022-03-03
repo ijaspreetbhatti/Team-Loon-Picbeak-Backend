@@ -14,7 +14,8 @@ const ProfileSchema = mongoose.Schema({
         type: String,
         required: true,
     },
-    collectedBirds: [String]
+    collectedBirds: [String],
+    portraitId: String
 });
 
 module.exports = mongoose.model('profile', ProfileSchema);
