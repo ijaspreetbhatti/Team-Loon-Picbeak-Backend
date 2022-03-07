@@ -9,7 +9,7 @@ const getCollectedBirdImage = async (req, res) => {
         const response = await CollectedBird.find({ sciName: req.params.sciName, author: req.query.author });
         res.send(response);
     } catch (err) {
-        return res.status(400).send(err.message);
+        return res.status(400).send(err);
     }
 };
 
@@ -29,7 +29,7 @@ const createCollectedBirdImage = async (req, res) => {
         const response = await newBirdImage.save();
         res.send(response);
     } catch (err) {
-        return res.status(400).send(err.message);
+        return res.status(400).send(err);
     }
 }
 
