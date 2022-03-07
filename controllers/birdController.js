@@ -4,13 +4,13 @@ const flickr = require('flickr-sdk')('8391ac68237f2756f302320f6e04fc66');
 
 const getBirds = async (req, res) => {
     try {
-        const { pageNumber, recordsPerPage, subnation } = req.query;
-        const body = {
+        const { page, recordsPerPage, subnation, gRank, searchKeyword } = req.query;
+        let body = {
             "criteriaType": "species",
             "locationCriteria": [
                 {
                     "paramType": "subnation",
-                    "subnation": subnation,
+                    "subnation": subnation || 'BC',
                     "nation": "CA"
                 }
             ],
@@ -23,10 +23,32 @@ const getBirds = async (req, res) => {
                 }
             ],
             "pagingOptions": {
-                "page": pageNumber,
+                "page": page,
                 "recordsPerPage": recordsPerPage
             }
         };
+        if (gRank && gRank !== 'all' && gRank !== '') {
+            body = {
+                ...body,
+                "statusCriteria": [
+                    {
+                        "paramType": "globalRank",
+                        "globalRank": gRank
+                    }
+                ]
+            }
+        }
+        if (searchKeyword && searchKeyword !== '') {
+            body = {
+                ...body,
+                "textCriteria": [
+                    {
+                        "paramType": "quickSearch",
+                        "searchToken": searchKeyword
+                    }
+                ]
+            }
+        }
         const response = await axios.post(`https://explorer.natureserve.org/api/data/speciesSearch`, body);
         res.send(response.data.results.map(bird => {
             return {
@@ -36,7 +58,24 @@ const getBirds = async (req, res) => {
             }
         }));
     } catch (err) {
-        return res.status(400).send(err.message);
+        return res.status(400).send(err);
+    }
+};
+
+const getBirdsByLocation = async (req, res) => {
+    try {
+        const config = {
+            headers: {
+                "X-eBirdApiToken": "ltmn95icte7g"
+            }
+        }
+        const response = await axios.get(`https://api.ebird.org/v2/data/obs/geo/recent?lat=${req.query.lat}&lng=${req.query.lng}&maxResults=${req.query.maxResults}`, config);
+        res.send(response.data.map((data) => ({
+            commonName: data.comName,
+            sciName: data.sciName
+        })));
+    } catch (err) {
+        res.status(400).send(err);
     }
 };
 
@@ -58,7 +97,7 @@ const getBirdBySciName = async (req, res) => {
             conservationStatus: response.data.results[0].roundedGRank,
         });
     } catch (err) {
-        return res.status(400).send(err.message);
+        return res.status(400).send(err);
     }
 };
 
@@ -73,7 +112,7 @@ const getBirdDescription = async (req, res) => {
             res.send({ errorMessage: 'Description not available!' });
         }
     } catch (err) {
-        return res.status(400).send(err.message);
+        return res.status(400).send(err);
     }
 }
 
@@ -89,7 +128,7 @@ const getBirdImage = async (req, res) => {
             res.send({ errorMessage: 'Image not available!' });
         }
     } catch (err) {
-        return res.status(400).send(err.message);
+        return res.status(400).send(err);
     }
 }
 
@@ -102,7 +141,7 @@ const getBirdAudio = async (req, res) => {
             res.send({ errorMessage: 'Audio not available!' });
         }
     } catch (err) {
-        return res.status(400).send(err.message);
+        return res.status(400).send(err);
     }
 };
 
@@ -111,12 +150,13 @@ const getBirdGallery = async (req, res) => {
         const response = await CollectedBird.find({ sciName: req.params.sciName });
         res.send(response);
     } catch (err) {
-        return res.status(400).send(err.message);
+        return res.status(400).send(err);
     }
 };
 
 module.exports = {
     getBirds,
+    getBirdsByLocation,
     getBirdBySciName,
     getBirdDescription,
     getBirdImage,
@@ -127,7 +167,7 @@ module.exports = {
 // const getBirds = async (req, res) => {
 //     console.log('getBird', req);
 //     const birds = [];
-//     const { pageNumber, recordsPerPage } = req.query;
+//     const { page, recordsPerPage } = req.query;
 //     const body = {
 //         "criteriaType": "species",
 //         "locationCriteria": [
@@ -146,7 +186,7 @@ module.exports = {
 //             }
 //         ],
 //         "pagingOptions": {
-//             "page": pageNumber,
+//             "page": page,
 //             "recordsPerPage": recordsPerPage
 //         }
 //     };
