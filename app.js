@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 let path = require('path');
 const connected = require("./connection.js");
+const { loadBirds } = require("./scheduler.js");
 
 connected
     .then(() => {
@@ -24,3 +25,17 @@ app.get('/', (req, res) => {
 });
 
 app.use('/', routes);
+
+function birdTask() {
+    try {
+        loadBirds();
+    }
+    catch (error) {
+        console.log(error);
+    }
+}
+
+// Runs Scheduled task
+setInterval(() => {
+    birdTask();
+}, 1296000000);
