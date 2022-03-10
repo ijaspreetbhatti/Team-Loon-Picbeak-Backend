@@ -8,7 +8,7 @@ const getProfiles = async (req, res) => {
     try {
         res.json(await Profile.find());
     } catch (err) {
-        return res.status(401).send(err.message);
+        return res.status(400).send(err);
     }
 };
 
@@ -16,7 +16,7 @@ const getProfile = async (req, res) => {
     try {
         res.json(await Profile.findOne({ _id: req.params.id }));
     } catch (err) {
-        return res.status(401).send(err.message);
+        return res.status(400).send(err);
     }
 };
 
@@ -33,7 +33,7 @@ const postProfile = async (req, res) => {
         const response = await newUser.save();
         res.json(response);
     } catch (err) {
-        return res.status(401).send(err.message);
+        return res.status(400).send(err);
     }
 };
 
@@ -48,7 +48,7 @@ const putProfile = async (req, res) => {
         })
         res.json(response);
     } catch (err) {
-        return res.status(401).send(err.message);
+        return res.status(400).send(err);
     }
 };
 
@@ -59,7 +59,7 @@ const deleteProfile = async (req, res) => {
         });
         res.json(response);
     } catch (err) {
-        return res.status(401).send(err.message);
+        return res.status(400).send(err);
     }
 };
 
@@ -73,7 +73,7 @@ const addCollectedBird = async (req, res) => {
         });
         res.json(response);
     } catch (err) {
-        return res.status(400).send(err.message);
+        return res.status(400).send(err);
     }
 };
 
