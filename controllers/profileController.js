@@ -68,7 +68,12 @@ const addCollectedBird = async (req, res) => {
         const response = await Profile.updateOne({ _id: req.params.author }, {
             "$addToSet":
             {
-                "collectedBirds": req.params.sciName
+                "collectedBirds":
+                {
+                    sciName: req.params.sciName,
+                    imageLink: req.params.imageLink,
+                    commonName: req.params.commonName
+                }
             }
         });
         res.json(response);
