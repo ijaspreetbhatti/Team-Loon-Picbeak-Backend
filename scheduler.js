@@ -102,7 +102,12 @@ const saveToMongo = async () => {
         (new Bird(bird)).save()
             .then((response) => {
                 // console.log(response);
-            }).catch(err => console.log(err))
+            }).catch(async err => {
+                console.log(err.code);
+                if (err.code === 11000) {
+                    const response = await Bird.updateOne({ sciName: bird.sciName }, bird);
+                }
+            })
     });
     console.log('Done');
 };
