@@ -65,7 +65,7 @@ const deleteProfile = async (req, res) => {
 
 const addCollectedBird = async (req, res) => {
     try {
-        const response = await Profile.updateOne({ _id: req.params.author }, {
+        const response = await Profile.updateOne({ _id: req.params.id }, {
             "$addToSet":
             {
                 "collectedBirds": req.params.sciName
