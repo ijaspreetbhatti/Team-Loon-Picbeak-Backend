@@ -15,7 +15,7 @@ const getCollectedBirdImage = async (req, res) => {
 
 const createCollectedBirdImage = async (req, res) => {
     try {
-        const linkResponse = await axios(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
+        const linkResponse = await axios.post(`https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, {
             file: req.body.file,
             timestamp: req.body.timestamp,
             upload_preset: 'q6sujdna',
