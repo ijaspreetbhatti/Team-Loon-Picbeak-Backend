@@ -6,7 +6,7 @@ const matchUser = async (req, res) => {
     const user = await profile.findOne({ email, password }).lean();
 
     if (user && user.isActive) {
-        res.json({ user: user._id, email: email, password: password })
+        res.json({ user: user._id, name: user.nickName })
     } else {
         res.json({ status: 'error', message: 'invalid email or password' })
     }
