@@ -24,7 +24,7 @@ const createCollectedBirdImage = async (req, res) => {
         const newBirdImage = new CollectedBird({
             sciName: req.params.sciName,
             author: req.params.author,
-            imageLink: linkResponse.url
+            imageLink: linkResponse.data.url
         });
         const response = await newBirdImage.save();
         res.send(response);
